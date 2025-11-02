@@ -1,4 +1,4 @@
-// *** 學生數據：恢復至原始 CSV 數據 (按座號排序) ***
+// *** 學生數據：基於原始 CSV 數據 (按座號排序) ***
 const studentsWithSeat = [
     {seat: 1, name: "李修全", score: 0},
     {seat: 3, name: "唐睿妤", score: 0},

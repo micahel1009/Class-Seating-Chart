@@ -289,7 +289,6 @@ function generateSeatingChart() {
         const student = studentsWithSeat.find(s => s.seat === i);
         const seatDiv = document.createElement('div');
 
-        // 注意：這裡移除了所有 dark: class
         if (student) {
             // 有學生的座位卡
             seatDiv.className = 'seat-card bg-white rounded-xl p-4 shadow-lg border-2 border-blue-200 cursor-pointer';
@@ -335,7 +334,6 @@ function generateUnassignedStudents() {
 
     studentsWithoutSeat.forEach(student => {
         const studentDiv = document.createElement('div');
-        // 注意：這裡移除了所有 dark: class
         studentDiv.className = 'seat-card no-seat bg-white rounded-xl p-4 shadow-lg cursor-pointer';
         studentDiv.draggable = true;
         studentDiv.dataset.name = student.name;
@@ -515,7 +513,8 @@ function closeScorePopup() {
 // 輔助函式：正規化名稱，移除所有空白字符，確保匹配
 function normalizeName(name) {
     if (typeof name !== 'string') return '';
-    return name.trim().replace(/\s/g, '');
+    // 將所有空白字符 (包括全形空格、零寬度空格等) 替換為空
+    return name.trim().replace(/\s/g, ''); 
 }
 
 function addScore(points) {

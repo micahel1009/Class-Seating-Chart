@@ -1,57 +1,49 @@
-// *** 根據圖二更新的學生數據 ***
+// *** 學生數據：恢復至原始 CSV 數據 (按座號排序) ***
 const studentsWithSeat = [
-    // 第一排 (座號 1-6)
     {seat: 1, name: "李修全", score: 0},
-    {seat: 2, name: "唐睿妤", score: 0}, 
-    {seat: 3, name: "王又可", score: 0},
-    {seat: 4, name: "蔡宇承", score: 0},
-    {seat: 5, name: "劉若芊", score: 0},
-    {seat: 6, name: "詹沐安", score: 0},
-    // 第二排 (座號 7-12)
-    {seat: 7, name: "張景翔", score: 0},
-    {seat: 8, name: "陳宥楠", score: 0},
-    {seat: 9, name: "王冠曄", score: 0},
-    {seat: 10, name: "徐翊瑋", score: 0},
-    {seat: 11, name: "施姵岑", score: 0},
-    {seat: 12, name: "葉彥妤", score: 0},
-    // 第三排 (座號 13-18)
-    {seat: 13, name: "胡伊涵", score: 0},
-    {seat: 14, name: "張之又", score: 0},
-    {seat: 15, name: "劉昱瑩", score: 0},
-    {seat: 16, name: "蔡承諺", score: 0},
-    {seat: 17, name: "楊俊緯", score: 0},
-    {seat: 18, name: "陳柏丞", score: 0},
-    // 第四排 (座號 19-24)
-    {seat: 19, name: "侯凱元", score: 0},
-    {seat: 20, name: "洪兆邑", score: 0},
-    {seat: 21, name: "邱韋綸", score: 0},
-    {seat: 22, name: "郭啓宏", score: 0},
-    {seat: 23, name: "鄭傳耀", score: 0},
-    {seat: 24, name: "張守騏", score: 0},
-    // 第五排 (座號 25-30)
-    {seat: 25, name: "王品超", score: 0},
-    {seat: 26, name: "張博彥", score: 0},
-    {seat: 27, name: "吳宜芳", score: 0},
-    {seat: 28, name: "朱鳳凌", score: 0},
-    {seat: 29, name: "林家嫺", score: 0},
-    {seat: 30, name: "陳品翰", score: 0},
-    // 第六排 (座號 31-36)
-    {seat: 31, name: "劉芮錡", score: 0},
-    {seat: 32, name: "李瑋宸", score: 0},
-    {seat: 33, name: "陳舒婷", score: 0},
-    {seat: 34, name: "詹宜臻", score: 0},
-    {seat: 35, name: "賴承鍇", score: 0},
-    {seat: 36, name: "蔡欣諭", score: 0},
-    // 第七排 (座號 37-42)
-    {seat: 37, name: "李昶毅", score: 0},
-    {seat: 38, name: "劉統傑", score: 0},
-    {seat: 39, name: "劉易承", score: 0},
-    {seat: 40, name: "鄒采珊", score: 0},
-    {seat: 41, name: "胡宇彤", score: 0},
-    {seat: 42, name: "洪赫奕", score: 0},
-    // 第八排 (座號 43-44)
-    {seat: 43, name: "邱子齊", score: 0},
-    {seat: 44, name: "阮孟勇", score: 0}
+    {seat: 3, name: "唐睿妤", score: 0},
+    {seat: 4, name: "王又可", score: 0},
+    {seat: 6, name: "蔡宇承", score: 0},
+    {seat: 7, name: "劉若芊", score: 0},
+    {seat: 8, name: "詹沐安", score: 0},
+    {seat: 9, name: "張景翔", score: 0},
+    {seat: 11, name: "陳宥楠", score: 0},
+    {seat: 13, name: "王冠曄", score: 0},
+    {seat: 14, name: "徐翊瑋", score: 0},
+    {seat: 16, name: "施姵岑", score: 0},
+    {seat: 17, name: "葉彥妤", score: 0},
+    {seat: 18, name: "胡伊涵", score: 0},
+    {seat: 20, name: "張之又", score: 0},
+    {seat: 22, name: "劉昱瑩", score: 0},
+    {seat: 24, name: "蔡承諺", score: 0},
+    {seat: 25, name: "楊俊緯", score: 0},
+    {seat: 26, name: "陳柏丞", score: 0},
+    {seat: 27, name: "侯凱元", score: 0},
+    {seat: 29, name: "洪兆邑", score: 0},
+    {seat: 30, name: "邱韋綸", score: 0},
+    {seat: 31, name: "郭啓宏", score: 0},
+    {seat: 32, name: "鄭傳耀", score: 0},
+    {seat: 33, name: "張守騏", score: 0},
+    {seat: 34, name: "王品超", score: 0},
+    {seat: 35, name: "張博彥", score: 0},
+    {seat: 37, name: "吳宜芳", score: 0},
+    {seat: 38, name: "朱鳳凌", score: 0},
+    {seat: 39, name: "林家嫺", score: 0},
+    {seat: 40, name: "陳品翰", score: 0},
+    {seat: 41, name: "劉芮錡", score: 0},
+    {seat: 42, name: "李瑋宸", score: 0},
+    {seat: 43, name: "陳舒婷", score: 0},
+    {seat: 44, name: "詹宜臻", score: 0},
+    {seat: 45, name: "賴承鍇", score: 0},
+    {seat: 46, name: "蔡欣諭", score: 0},
+    {seat: 47, name: "李昶毅", score: 0},
+    {seat: 48, name: "劉統傑", score: 0},
+    {seat: 49, name: "劉易承", score: 0},
+    {seat: 50, name: "鄒采珊", score: 0},
+    {seat: 51, name: "胡宇彤", score: 0},
+    {seat: 52, name: "洪赫奕", score: 0},
+    {seat: 53, name: "邱子齊", score: 0},
+    {seat: 54, name: "阮孟勇", score: 0}
 ];
 
 // 未分配學生數據 (12人)
@@ -64,7 +56,7 @@ const studentsWithoutSeat = [
     {name: "陳伸鋒", score: 0},
     {name: "謝駿賢", score: 0},
     {name: "陳毅嘉", score: 0},
-    {name: "陳　薇", score: 0}, // 包含全形空格，已在 JS 邏輯中處理
+    {name: "陳　薇", score: 0}, 
     {name: "陳心妮", score: 0},
     {name: "黃睿傑", score: 0},
     {name: "張鈞皓", score: 0}
@@ -75,10 +67,9 @@ let draggedElement = null;
 let draggedStudentName = null;
 let draggedStudentSeat = null;
 
-// 輔助函式：正規化名稱，移除所有空白字符，確保匹配
+// 輔助函式：正規化名稱，移除所有空白字符 (包括全形空格)，確保匹配
 function normalizeName(name) {
     if (typeof name !== 'string') return '';
-    // 將所有空白字符 (包括全形空格、零寬度空格等) 替換為空
     return name.trim().replace(/\s/g, ''); 
 }
 
@@ -86,7 +77,8 @@ function normalizeName(name) {
 function generateSeatingChart() {
     const seatingChart = document.getElementById('seatingChart');
     seatingChart.innerHTML = ''; 
-    const maxSeat = 48; // 最大顯示座位數調整為 48 (8排*6個)，以容納空位和未來擴展
+    // 最大座號是 54
+    const maxSeat = 54; 
 
     for (let i = 1; i <= maxSeat; i++) {
         const student = studentsWithSeat.find(s => s.seat === i);

@@ -1,0 +1,33 @@
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+}
+.seat-card {
+    transition: all 0.2s ease;
+}
+.seat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+/* 拖曳中的卡片樣式 */
+.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+}
+/* 可放置的目標區域樣式 */
+.drop-zone {
+    border: 2px dashed #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+}
+/* 未分配座號學生的樣式 (紅色標記) */
+.no-seat {
+    border: 2px solid #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+}
+/* 加分彈窗的動畫效果 */
+.score-popup {
+    transform: scale(0);
+    transition: transform 0.2s ease;
+}
+.score-popup.active {
+    transform: scale(1);
+}

@@ -279,23 +279,6 @@ let draggedElement = null;
 let draggedStudentName = null;
 let draggedStudentSeat = null;
 
-// --- 主題切換 (深色模式) ---
-const themeToggle = document.getElementById('themeToggle');
-const html = document.documentElement;
-const savedTheme = localStorage.getItem('theme');
-const systemPreference = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-const currentTheme = savedTheme || systemPreference;
-
-if (currentTheme === 'dark') {
-    html.classList.add('dark');
-}
-
-themeToggle.addEventListener('click', () => {
-    html.classList.toggle('dark');
-    const newTheme = html.classList.contains('dark') ? 'dark' : 'light';
-    localStorage.setItem('theme', newTheme);
-});
-
 // --- 座位表生成 ---
 function generateSeatingChart() {
     const seatingChart = document.getElementById('seatingChart');
@@ -306,33 +289,34 @@ function generateSeatingChart() {
         const student = studentsWithSeat.find(s => s.seat === i);
         const seatDiv = document.createElement('div');
 
+        // 注意：這裡移除了所有 dark: class
         if (student) {
             // 有學生的座位卡
-            seatDiv.className = 'seat-card bg-white dark:bg-gray-700 rounded-xl p-4 shadow-lg border-2 border-blue-200 dark:border-blue-600 cursor-pointer';
+            seatDiv.className = 'seat-card bg-white rounded-xl p-4 shadow-lg border-2 border-blue-200 cursor-pointer';
             seatDiv.draggable = true;
             seatDiv.dataset.seat = student.seat;
             seatDiv.dataset.name = student.name;
             seatDiv.innerHTML = `
                 <div class="text-center">
-                    <div class="text-sm text-blue-600 dark:text-blue-400 font-semibold mb-1">座號 ${student.seat}</div>
-                    <div class="font-bold text-gray-900 dark:text-white mb-2">${student.name}</div>
-                    <div class="text-xs text-gray-500 dark:text-gray-400">積分: <span class="score">${student.score}</span></div>
+                    <div class="text-sm text-blue-600 font-semibold mb-1">座號 ${student.seat}</div>
+                    <div class="font-bold text-gray-900 mb-2">${student.name}</div>
+                    <div class="text-xs text-gray-500">積分: <span class="score">${student.score}</span></div>
                 </div>
             `;
             seatDiv.addEventListener('click', () => openScorePopup(student.name));
             addDragListeners(seatDiv, student.name, student.seat);
-            addDropListeners(seatDiv, student.seat); // 可放置在有學生的座位上 (用於交換)
+            addDropListeners(seatDiv, student.seat);
         } else {
             // 空位卡
-            seatDiv.className = 'seat-card bg-gray-100 dark:bg-gray-800 rounded-xl p-4 shadow-lg border-2 border-dashed border-gray-300 dark:border-gray-600';
+            seatDiv.className = 'seat-card bg-gray-100 rounded-xl p-4 shadow-lg border-2 border-dashed border-gray-300';
             seatDiv.dataset.seat = i;
             seatDiv.innerHTML = `
                 <div class="text-center">
-                    <div class="text-sm text-gray-400 dark:text-gray-500 font-semibold mb-1">座號 ${i}</div>
-                    <div class="text-gray-400 dark:text-gray-500">空位</div>
+                    <div class="text-sm text-gray-400 font-semibold mb-1">座號 ${i}</div>
+                    <div class="text-gray-400">空位</div>
                 </div>
             `;
-            addDropListeners(seatDiv, i); // 可放置在空位上 (用於分配座號)
+            addDropListeners(seatDiv, i);
         }
 
         seatingChart.appendChild(seatDiv);
@@ -351,15 +335,15 @@ function generateUnassignedStudents() {
 
     studentsWithoutSeat.forEach(student => {
         const studentDiv = document.createElement('div');
-        // 使用 .no-seat class 加上紅色邊框
-        studentDiv.className = 'seat-card no-seat bg-white dark:bg-gray-700 rounded-xl p-4 shadow-lg cursor-pointer';
+        // 注意：這裡移除了所有 dark: class
+        studentDiv.className = 'seat-card no-seat bg-white rounded-xl p-4 shadow-lg cursor-pointer';
         studentDiv.draggable = true;
         studentDiv.dataset.name = student.name;
         studentDiv.innerHTML = `
             <div class="text-center">
-                <div class="text-sm text-red-600 dark:text-red-400 font-semibold mb-1">未分配</div>
-                <div class="font-bold text-gray-900 dark:text-white mb-2">${student.name}</div>
-                <div class="text-xs text-gray-500 dark:text-gray-400">積分: <span class="score">${student.score}</span></div>
+                <div class="text-sm text-red-600 font-semibold mb-1">未分配</div>
+                <div class="font-bold text-gray-900 mb-2">${student.name}</div>
+                <div class="text-xs text-gray-500">積分: <span class="score">${student.score}</span></div>
             </div>
         `;
         studentDiv.addEventListener('click', () => openScorePopup(student.name));
@@ -528,13 +512,19 @@ function closeScorePopup() {
     }, 200);
 }
 
+// 輔助函式：正規化名稱，移除所有空白字符，確保匹配
+function normalizeName(name) {
+    if (typeof name !== 'string') return '';
+    return name.trim().replace(/\s/g, '');
+}
+
 function addScore(points) {
-    // 尋找學生並更新分數。需進行正規化處理，以應對姓名中的空白字符 (如 '陳　薇')
-    const normalizedSelectedName = selectedStudentName.trim().replace(/\s/g, '');
+    // 尋找學生並更新分數。使用新的正規化函式
+    const normalizedSelectedName = normalizeName(selectedStudentName);
     
-    let student = studentsWithSeat.find(s => s.name.trim().replace(/\s/g, '') === normalizedSelectedName);
+    let student = studentsWithSeat.find(s => normalizeName(s.name) === normalizedSelectedName);
     if (!student) {
-        student = studentsWithoutSeat.find(s => s.name.trim().replace(/\s/g, '') === normalizedSelectedName);
+        student = studentsWithoutSeat.find(s => normalizeName(s.name) === normalizedSelectedName);
     }
 
     if (student) {
@@ -553,10 +543,11 @@ function updateScoreDisplay() {
         const nameElement = card.querySelector('.font-bold');
 
         if (nameElement) {
-            const name = nameElement.textContent.trim().replace(/\s/g, '');
-            let student = studentsWithSeat.find(s => s.name.trim().replace(/\s/g, '') === name);
+            // 從顯示卡片獲取名稱並正規化
+            const name = normalizeName(nameElement.textContent);
+            let student = studentsWithSeat.find(s => normalizeName(s.name) === name);
             if (!student) {
-                student = studentsWithoutSeat.find(s => s.name.trim().replace(/\s/g, '') === name);
+                student = studentsWithoutSeat.find(s => normalizeName(s.name) === name);
             }
             if (student) {
                 scoreElement.textContent = student.score;
